@@ -1,0 +1,39 @@
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+class Solution {
+public:
+    int maximumPopulation(std::vector<std::vector<int>>& logs) {
+
+        const int BASE_YEAR = 1950;
+        const int MAX_YEAR_INDEX = 101; 
+        std::vector<int> change_in_pop(MAX_YEAR_INDEX, 0);
+        for (const auto& log : logs) {
+            int birth_year = log[0];
+            int death_year = log[1];
+            
+            change_in_pop[birth_year - BASE_YEAR]++;
+
+            if (death_year - BASE_YEAR < MAX_YEAR_INDEX) {
+                change_in_pop[death_year - BASE_YEAR]--;
+            }
+        }
+
+        int max_population = 0;
+        int current_population = 0;
+        int earliest_max_year = BASE_YEAR;
+
+        for (int i = 0; i < MAX_YEAR_INDEX; ++i) {
+            current_population += change_in_pop[i];
+
+            if (current_population > max_population) {
+                max_population = current_population;
+                earliest_max_year = BASE_YEAR + i;
+            }
+        }
+
+        return earliest_max_year;
+    }
+};
+
