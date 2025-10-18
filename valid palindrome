@@ -1,0 +1,34 @@
+#include <string>
+#include <algorithm>
+#include <cctype>
+#include <iostream>
+
+class Solution {
+public:
+    /**
+     * @brief Checks if a string is a valid palindrome, considering only alphanumeric characters
+     * and ignoring case.
+     * * @param s The input string.
+     * @return true if the string is a palindrome, false otherwise.
+     */
+    bool isPalindrome(std::string s) {
+        std::string filtered_s;
+        for (char c : s) {
+            if (std::isalnum(static_cast<unsigned char>(c))) {
+                filtered_s.push_back(std::tolower(static_cast<unsigned char>(c)));
+            }
+        }
+        int left = 0;
+        int right = filtered_s.length() - 1;
+        
+        while (left < right) {
+            if (filtered_s[left] != filtered_s[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+};
+
