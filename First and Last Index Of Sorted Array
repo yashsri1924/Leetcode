@@ -1,0 +1,41 @@
+#include <vector>
+#include <algorithm>
+
+class Solution {
+private:
+    int search(const std::vector<int>& nums, int target, bool findLeftmost) {
+        int index = -1; 
+        int low = 0;
+        int high = nums.size() - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] == target) {
+                index = mid; 
+
+                if (findLeftmost) {
+                    high = mid - 1; 
+                } else {
+                    low = mid + 1; 
+                }
+            } else if (nums[mid] < target) {
+                low = mid + 1;
+            } else { 
+                high = mid - 1;
+            }
+        }
+        return index;
+    }
+
+public:
+    std::vector<int> searchRange(std::vector<int>& nums, int target) {
+        int left = search(nums, target, true);
+        if (left == -1) {
+            return {-1, -1};
+        }
+        int right = search(nums, target, false);
+
+        return {left, right};
+    }
+};
