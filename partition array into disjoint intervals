@@ -1,0 +1,17 @@
+int partitionDisjoint(int* nums, int numsSize) {
+    int leftMax = nums[0];
+    int maxSoFar = nums[0];
+    int partitionIdx = 0;
+
+    for (int i = 1; i < numsSize; i++) {
+        maxSoFar = (nums[i] > maxSoFar) ? nums[i] : maxSoFar;
+
+        if (nums[i] < leftMax) {
+            // We must include nums[i] in the left partition
+            leftMax = maxSoFar;
+            partitionIdx = i;
+        }
+    }
+
+    return partitionIdx + 1;
+}
