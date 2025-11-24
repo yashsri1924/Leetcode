@@ -1,0 +1,36 @@
+#include <string>
+#include <algorithm>
+#include <iostream>
+
+class Solution {
+private:
+    bool checkPalindrome(const std::string& s, int l, int r) {
+        while (l < r) {
+            if (s[l] != s[r]) {
+                return false;
+            }
+            l++;
+            r--;
+        }
+        return true;
+    }
+
+public:
+  
+    bool validPalindrome(std::string s) {
+        int left = 0;
+        int right = s.length() - 1;
+        while (left < right) {
+            if (s[left] != s[right]) {
+                
+                bool skip_left = checkPalindrome(s, left + 1, right);
+                bool skip_right = checkPalindrome(s, left, right - 1);
+
+                return skip_left || skip_right;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+};
